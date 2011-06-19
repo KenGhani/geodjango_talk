@@ -1,0 +1,24 @@
+1)  Simple
+  * Office locations
+    - set office location in admin
+  * User location (welovedjango.com)
+    - show on map where users are located
+    - show user's close by
+    - set user location using javascript call
+    - flow
+      - Landing page
+        - Address
+        - Enter username
+        - password
+        - website
+        - linkedin
+        - twitter
+      - Submit
+      - Zoom map to their location
+      - Drop down nearby django people
+
+2)  Complex
+  * Heat map
+  * Data Analysis
+    - most expensive zip codes
+    - show import shape file
