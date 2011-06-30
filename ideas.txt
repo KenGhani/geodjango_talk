@@ -19,6 +19,8 @@
 
 2)  Complex
   * Heat map
+    - Unemployment net job gains in metropolitan area (http://tipstrategies.com/interactive/geo-jobs-2011-01/)
   * Data Analysis
     - most expensive zip codes
     - show import shape file
+    - crime
