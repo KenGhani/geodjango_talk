@@ -1,0 +1,10 @@
+*.pyc
+*.pyo
+*.o
+*.so
+*.swp
+*.vim
+.DS_Store
+.~lock.*
+.idea/
+/virenv/

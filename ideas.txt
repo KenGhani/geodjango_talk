@@ -24,3 +24,24 @@
     - most expensive zip codes
     - show import shape file
     - crime
+
+3)  Discuss tools and API providers
+  * Google API vs MapQuest vs OpenLayers
+  * Mapstraction, Leaflet
+
+
+
+
+Rough Outline:
+
+  * Introduction
+  * Installing and configuring PostGIS
+  * Setting up a GeoDjango project
+  * Creating geospatial models in GeoDjango
+  * Editing geospatial data in Django admin
+  * Displaying data in a template with Google Maps
+  * Modeling and loading ESRI shape files into your site
+  * Fun with spatial queries
+  * Adding visualizations with Google Maps (maybe, may not have time)
+  * Quick run-down of additional API, libraries, and other resources
+  * Questions
