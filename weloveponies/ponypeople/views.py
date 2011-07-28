@@ -1,59 +1,80 @@
-from annoying.decorators import ajax_request
+import colorsys
+import math
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
 from django.db.models import Count
+import json
 
 from models import Djangonaut, County, State
 
-@ajax_request
 def get_djangonauts(request):
     people = []
+
     for person in Djangonaut.objects.all():
         people.append({
             'name': person.name,
-            'lng': person.location.coords[0],
-            'lat': person.location.coords[1],
+            'geojson': person.location.geojson,
         })
-    return { 'people': people }
 
-@ajax_request
-def get_counties(request):
-    counties = []
+    return HttpResponse(
+        json.dumps({'people': people}),
+        mimetype="application/json"
+    )
+
+def get_states(request):
+    states = []
+
+    min_people = None
+    max_people = None
+
+    # Get the base statistics
+    for state in State.objects.all():
+        num_djangonauts = Djangonaut.objects.filter(location__within=state.geom).count()
+
+        if num_djangonauts > 0:
+            if min_people is None or min_people > num_djangonauts:
+                min_people = num_djangonauts
+            if max_people is None or max_people < num_djangonauts:
+                max_people = num_djangonauts
+
+            states.append({
+                'id': state.id,
+                'name': state.name10,
+                'num_djangonauts': num_djangonauts,
+                'geojson_boundries': state.geom.geojson,
+                'geojson_center': state.geom.centroid.geojson
+            })
+
+    # Get the color for each state
+    for state_info in states:
+        state_info['color'] = generate_shade(min_people, max_people, state_info['num_djangonauts'])
+
+    # Create json, inserting each person's geojson coordinates after converting dict into json
+    return HttpResponse(
+        json.dumps({'states': states}),
+        mimetype="application/json"
+    )
+
+def get_people_in_state(request, state_id):
+    state = get_object_or_404(State, pk=state_id)
+    people = []
     
-    for county in County.objects.all():
-        counties.append({
-            'name': county.name10,
-            'num_djangonauts': Djangonaut.objects.filter(location__within=county.geom).count()
+    for person in Djangonaut.objects.filter(location__within=state.geom):
+        people.append({
+            'geojson': person.location.geojson,
         })
 
-    return { 'counties': counties }
+    return HttpResponse(
+        json.dumps({'people': people}),
+        mimetype="application/json"
+    )
 
-def generate_ethnic_breakdown_data(ethnic_breakdown):
-    """
-    Figures out the color to represent each enthnicity in the graph, starting by giving the smallest
-    minority the lightest color and getting progressively darker with each larger race.  Also
-    calculates the width of the divs for the graph on the webpage.
-    """
-    lightest_color = colorsys.rgb_to_hls(1, 215.0/255, 153.0/255)
-    colors = [colorsys.hls_to_rgb(lightest_color[0], lightest_color[1] - (0.08*i), lightest_color[2])
-              for i in range(len(ethnic_breakdown))]
-    sorted_ethnicities_min_to_maj = sorted(ethnic_breakdown.iteritems(), key=operator.itemgetter(1))
-    total_points = float(sum([v for v in ethnic_breakdown.values()]))
-    total_div_width = 400 # pixels
-    remaining_width = total_div_width
-
-    color_breakdown = []
-    for i,color in enumerate(colors):
-        width = math.floor(total_div_width * (sorted_ethnicities_min_to_maj[i][1]/total_points))
-        remaining_width -= width
-        color_breakdown.append({
-            'label': sorted_ethnicities_min_to_maj[i][0],
-            'percentage': sorted_ethnicities_min_to_maj[i][1] * 100,
-            'color': rgb_to_color_string(color),
-            'width': width
-        })
-    if remaining_width > 0:
-        color_breakdown[-1]['width'] += remaining_width
-
-    return list(reversed(color_breakdown)) # this will return the list in the order it will be rendered
+def generate_shade(min, max, value):
+    color = colorsys.rgb_to_hls(204/255, 255/255, 240/255)
+    max_lightness = 0.95 #
+    min_lightness = 0.05
+    color_step = (max_lightness-min_lightness)/(max-min) # go from brighter light (0.95) to pretty dark (0.05)
+    return rgb_to_color_string(colorsys.hls_to_rgb(color[0], (max_lightness - (value * color_step)) + min_lightness, color[2]))
 
 def rgb_to_color_string(rgb):
     """

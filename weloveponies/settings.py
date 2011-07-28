@@ -2,7 +2,6 @@
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
-INTERNAL_IPS = ('127.0.0.1',)
 
 ADMINS = (
     ('eric', 'carreric@gmail.com'),
@@ -99,7 +98,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 ROOT_URLCONF = 'weloveponies.urls'
@@ -119,18 +117,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.gis',
-
-    # third party apps
-    'tastypie',
-    'debug_toolbar',
-
-    # apps
     'ponypeople',
 )
-
-DEBUG_TOOLBAR_CONFIG = {
-    'INTERCEPT_REDIRECTS': False,
-}
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

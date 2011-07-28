@@ -1,11 +1,6 @@
 #!/usr/bin/env python
-import os
-import sys
 from django.core.management import execute_manager
 import imp
-
-sys.path.append(os.path.abspath('../django-trunk'))
-
 try:
     imp.find_module('settings') # Assumed to be in the same directory.
 except ImportError:
