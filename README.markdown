@@ -18,10 +18,10 @@ https://docs.djangoproject.com/en/1.3/ref/contrib/gis/install/
 ### Clone this repository
 
     $ git clone git://github.com/bigsassy/geodjango_talk.git
+
+### Create the virtualenv in the geodjango_talk directory
+
     $ cd geodjango_talk
-
-### Create the virtualenv in the base directory
-
     $ virtualenv --no-site-packages virenv
     $ source virenv/bin/activate
     $ pip -E virenv install -r REQUIREMENTS
