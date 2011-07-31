@@ -22,4 +22,3 @@ for person in people:
         name=person[2],
         location=Point(person[1], person[0])
     )
-    sys.stdout.write('.')
