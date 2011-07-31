@@ -8,34 +8,43 @@ code of the online version of my talk.
 INSTALLATION (apologies for lack of detail):
 --------------------------------------------
 
-1.  Install PostGIS using GeoDjango documentation:  https://docs.djangoproject.com/en/1.3/ref/contrib/gis/install/
-2.  Create the weloveponies database
-        CREATE DATABASE weloveponies WITH TEMPLATE template_postgis;
-3.  Clone this repository
-        ~/source$ git clone git://github.com/bigsassy/geodjango_talk.git
-        ~/source$ cd geodjango_talk
-4.  Create the virtualenv in the base directory
+### Install PostGIS using GeoDjango documentation
+https://docs.djangoproject.com/en/1.3/ref/contrib/gis/install/
 
-    geodjango_talk$ virtualenv --no-site-packages virenv
-    geodjango_talk$ source virenv/bin/activate
-    geodjango_talk$ pip -E virenv install -r REQUIREMENTS
+### Create the weloveponies database
 
-5.  Update the settings.py to include you database information
-        DATABASES = {
-            'default': {
-                'ENGINE': 'django.contrib.gis.db.backends.postgis',
-                'NAME': 'weloveponies',
-                'USER': '<your user name>',
-                'PASSWORD': '<your password>',
-            }
+    CREATE DATABASE weloveponies WITH TEMPLATE template_postgis;
+
+### Clone this repository
+
+    $ git clone git://github.com/bigsassy/geodjango_talk.git
+    $ cd geodjango_talk
+
+### Create the virtualenv in the base directory
+
+    $ virtualenv --no-site-packages virenv
+    $ source virenv/bin/activate
+    $ pip -E virenv install -r REQUIREMENTS
+
+### Update the settings.py to include you database information
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.contrib.gis.db.backends.postgis',
+            'NAME': 'weloveponies',
+            'USER': '<your user name>',
+            'PASSWORD': '<your password>',
         }
-6.  Sync the DB
-    geodjango_talk$ cd weloveponies
-    weloveponies$ python manage.py syncdb
-7.  Load the data
-        weloveponies$ python manage.py shell
-        # in shell
-        In [1]: execfile('../data/load_data.py')
+    }
+
+### Sync the DB
+
+    $ cd weloveponies
+    $ python manage.py syncdb
+
+### Load the data
+    $ python manage.py shell
+    >>> execfile('../data/load_data.py')
 
 Try it out:
 -----------
