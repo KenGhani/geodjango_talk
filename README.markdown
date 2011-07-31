@@ -5,6 +5,10 @@ This repository hosts the end result of my GeoDjango talk.  Currently, this is t
 my talk on July 27th, 2011 (http://www.meetup.com/django-district/events/16015696/).  Later, this will host the source
 code of the online version of my talk.
 
+You can view the slides on slideshare:
+
+http://www.slideshare.net/bigsassy/geotalk-presentation-8738796
+
 INSTALLATION (apologies for lack of detail):
 --------------------------------------------
 
