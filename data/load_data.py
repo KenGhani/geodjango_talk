@@ -1,9 +1,5 @@
-# -*- coding: utf-8 -*-
-
-# Above is used to avoid unicode errors from non-english names on the line:
-#     print 'Saved %s' % created_djangonaut
-
 import os
+import sys
 import cPickle
 
 from django.contrib.gis.utils import LayerMapping
@@ -22,8 +18,8 @@ print 'Loading people...'
 people = cPickle.loads(open('../data/people.p', 'r').read())
 
 for person in people:
-    created_djangonaut = Djangonaut.objects.create(
+    Djangonaut.objects.create(
         name=person[2],
         location=Point(person[1], person[0])
     )
-    print 'Saved: %s' % created_djangonaut
+    sys.stdout.write('.')
