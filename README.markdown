@@ -35,6 +35,13 @@ INSTALLATION (apologies for lack of detail):
         # in shell
         In [1]: execfile('../data/load_data.py')
 
+Try it out:
+-----------
+
+1.  Run the runserver command
+2.  Take a look at people at http://localhost:8000/ponypeople/people/
+3.  Take a look at the states visualization at http://localhost:8000/ponypeople/states/
+
 IMPORTANT NOTE:
 ---------------
 
