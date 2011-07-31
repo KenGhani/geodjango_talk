@@ -15,9 +15,11 @@ INSTALLATION (apologies for lack of detail):
         ~/source$ git clone git://github.com/bigsassy/geodjango_talk.git
         ~/source$ cd geodjango_talk
 4.  Create the virtualenv in the base directory
-        geodjango_talk$ virtualenv --no-site-packages virenv
-        geodjango_talk$ source virenv/bin/activate
-        geodjango_talk$ pip -E virenv install -r REQUIREMENTS
+
+    geodjango_talk$ virtualenv --no-site-packages virenv
+    geodjango_talk$ source virenv/bin/activate
+    geodjango_talk$ pip -E virenv install -r REQUIREMENTS
+
 5.  Update the settings.py to include you database information
         DATABASES = {
             'default': {
@@ -28,8 +30,8 @@ INSTALLATION (apologies for lack of detail):
             }
         }
 6.  Sync the DB
-        geodjango_talk$ cd weloveponies
-        weloveponies$ python manage.py syncdb
+    geodjango_talk$ cd weloveponies
+    weloveponies$ python manage.py syncdb
 7.  Load the data
         weloveponies$ python manage.py shell
         # in shell
