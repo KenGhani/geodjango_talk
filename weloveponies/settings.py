@@ -4,7 +4,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    ('eric', 'carreric@gmail.com'),
+    # ('Your Name', 'your_email@example.com'),
 )
 
 MANAGERS = ADMINS
@@ -13,7 +13,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'weloveponies',                      # Or path to database file if using sqlite3.
-        'USER': 'eric',                      # Not used with sqlite3.
+        'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
@@ -83,7 +83,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '+^=!r0)3sj8v#e%*)mc9utl0!ca4=9$jbj!37avej5v(*li(o%'
+SECRET_KEY = '3gny+77+5q@qdfb6k-lki3)0#952v#2$zs=@^s4wy2op-h00#e'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (

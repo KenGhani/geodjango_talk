@@ -1,84 +1,61 @@
-<!DOCTYPE html>
 <html>
+
 <head>
-<title>We Love Ponies!</title>
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 
 <style type="text/css">
-  html { height: 100% }
-  body { height: 100%; margin: 0px; padding: 0px }
-  #map_canvas { height: 100% }
+    html { height: 100% }
+    body { height: 100%; width: 100% }
+    #map_canvas { height: 100% }
 </style>
 
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.6.2.min.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/GeoJSON.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.6.2.min.js"></script>
+
 <script type="text/javascript">
 
-var visible_markers = [];
-var visible_info = null;
+    function init() {
+        var map = new google.maps.Map(document.getElementById("map_canvas"), {
+            zoom: 5,
+            center: new google.maps.LatLng(39.0861702319, -77.1389579773),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
 
-function initialize() {
-    var map = new google.maps.Map(document.getElementById("map_canvas"), {
-        zoom: 4,
-        center: new google.maps.LatLng(39.5, -98.35),
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    });
-
-    $.get('{% url ponypeople:get_states %}', function(data) {
-        for (i in data.states) {
-            add_state(map, data.states[i]);
-        }
-    });
-}
-
-function add_state(map, state) {
-    var polygons = new GeoJSON(eval('('+state.geojson_boundries+')'), {
-        "strokeColor": "#000000",
-        "strokeOpacity": 1,
-        "strokeWeight": 1,
-        "fillColor": state.color,
-        "fillOpacity": 0.6
-    });
-    var center_of_state = new GeoJSON(eval('('+state.geojson_center+')'));
-    var infowindow = new google.maps.InfoWindow({
-        content: state.name + ': <strong>' + state.num_djangonauts + '</strong> djangonauts'
-    });
-
-    for (i in polygons) {
-        polygons[i].setMap(map);
-        google.maps.event.addListener(polygons[i], 'click', function() {
-            clear_previous_state();
-            infowindow.open(map, center_of_state);
-            visible_info = infowindow;
-            add_djangonaut_markers(map, state.id);
+        $.get('{% url ponypeople:get_states %}', function(data) {
+            for (i in data.states)
+                add_state_to_map(map, data.states[i])
         });
     }
-}
 
-function clear_previous_state() {
-    if (visible_info != null)
-        visible_info.close()
-    for (i in visible_markers)
-        visible_markers[i].setMap(null);
-    visible_markers = [];
-}
+    function add_state_to_map(map, state) {
+        var polygons = new GeoJSON(eval('('+state.geojson_boundry+')'), {
+            "strokeColor": "#000000",
+            "strokeOpacity": 1,
+            "strokeWeight": 1,
+            "fillColor": state.color,
+            "fillOpacity": 0.7
+        });
 
-function add_djangonaut_markers(map, state_id) {
-    $.get('/ponypeople/states/' + state_id +'/people/json/', function(data) {
-        for (i in data.people) {
-            var marker = new GeoJSON(eval('('+data.people[i].geojson+')'));
-            marker.setMap(map)
-            visible_markers.push(marker);
+        var center = new GeoJSON(eval('('+state.geojson_center+')'));
+        var info_window = new google.maps.InfoWindow({
+            'content': state.name + ': <strong>' + state.num_people + '</strong> djangonauts.'
+        })
+
+        for (i in polygons) {
+            polygons[i].setMap(map);
+            google.maps.event.addListener(polygons[i], 'click', function() {
+                info_window.open(map, center);
+            });
         }
-    });
-}
+    }
 
 </script>
+
 </head>
 
-<body onload="initialize()">
-    <div id="map_canvas"></div>
-</body>
+<body onload="init()">
 
+<div id="map_canvas"></div>
+
+</body>
 </html>
