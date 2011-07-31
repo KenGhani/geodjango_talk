@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+
+# Above is used to avoid unicode errors from non-english names on the line:
+#     print 'Saved %s' % created_djangonaut
+
 import os
 import cPickle
 
@@ -21,4 +26,4 @@ for person in people:
         name=person[2],
         location=Point(person[1], person[0])
     )
-    print created_djangonaut
+    print 'Saved: %s' % created_djangonaut
